@@ -16,8 +16,8 @@ function a(p1) {}; a('hello', 'world');
 //
 // bug 3
 //
-//function b() {};
-//function b() {};
+function b() {};
+function b() {};
 
 //function c() {};
 //function c() {};
