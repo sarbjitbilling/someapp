@@ -65,7 +65,7 @@ pipeline {
                 // copy source into container.
                 // run via --entrypoint on commandline.
                 //
-                sh "docker run --rm --entrypoint bash --name sb-someapp-c1 sb-someapp-i1 sonar.sh $CHANGE_ID $CHANGE_BRANCH $CHANGE_TARGET $GITHUB_TOKEN"
+                sh "docker run --rm --entrypoint bash --name sb-someapp-c1 sb-someapp-i1 sonar.sh $CHANGE_ID $CHANGE_BRANCH $CHANGE_TARGET"
 
                 //
                 // v3 fails!!!
