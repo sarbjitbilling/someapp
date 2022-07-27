@@ -11,7 +11,7 @@ if (1==1) { console.log('hi') }
 //
 // bug 2
 //
-//function a(p1) {}; a('hello', 'world');
+function a(p1) {}; a('hello', 'world');
 
 //
 // bug 3
