@@ -50,7 +50,6 @@ pipeline {
                     //                 passwordVariable: "GITHUB_TOKEN"
                     //         )]
                     // ) 
-                    {
                         echo "sb-github-token GITHUB_USERNAME $GITHUB_USERNAME"
                         echo "sb-github-token GITHUB_TOKEN $GITHUB_TOKEN"
 
