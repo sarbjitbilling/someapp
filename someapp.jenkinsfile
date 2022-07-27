@@ -42,14 +42,6 @@ pipeline {
 
         stage("Docker Run Container") {
             steps {
-                script {
-                    // withCredentials(
-                    //         [usernamePassword(
-                    //                 credentialsId: "sb-github-token",
-                    //                 usernameVariable: "GITHUB_USERNAME",
-                    //                 passwordVariable: "GITHUB_TOKEN"
-                    //         )]
-                    // ) 
                         echo "sb-github-token GITHUB_USERNAME $GITHUB_USERNAME"
                         echo "sb-github-token GITHUB_TOKEN $GITHUB_TOKEN"
 
@@ -93,8 +85,6 @@ pipeline {
                         // also sonar-scanner then seems to not use or work with 'host.docker.internal'?
                         //
                         // sh "docker run --rm --entrypoint bash --name sb-someapp-c1 --volume '$WORKSPACE':/app sb-someapp-i1 sonar.sh $CHANGE_ID $CHANGE_BRANCH $CHANGE_TARGET $GITHUB_TOKEN"
-                    }
-                }
             }
         }
     }
