@@ -12,6 +12,15 @@ pipeline {
         stage("Setup") {
             steps {
                 echo "----- BUILD_NUMBER is $BUILD_NUMBER"
+
+                // CHANGE_ID seems to always be 1
+                echo "----- CHANGE_ID is $CHANGE_ID"
+
+                // CHANGE_BRANCH is somestory
+                echo "----- CHANGE_BRANCH is $CHANGE_BRANCH"
+
+                // CHANGE_TARGET is main
+                echo "----- CHANGE_TARGET is $CHANGE_TARGET"
             }
         }
 
@@ -42,49 +51,34 @@ pipeline {
 
         stage("Docker Run Container") {
             steps {
-                        echo "sb-github-token GITHUB_USERNAME $GITHUB_USERNAME"
-                        echo "sb-github-token GITHUB_TOKEN $GITHUB_TOKEN"
+                //
+                // v1 works!
+                //
+                // copy source into container.
+                // run via ENTRYPOINT in docker image.
+                //
+                // sh "docker run --rm --name sb-someapp-c1 sb-someapp-i1"
 
-                        // CHANGE_ID seems to always be 1
-                        echo "----- CHANGE_ID is $CHANGE_ID"
+                //
+                // v2 works!
+                //
+                // copy source into container.
+                // run via --entrypoint on commandline.
+                //
+                sh "docker run --rm --entrypoint bash --name sb-someapp-c1 sb-someapp-i1 sonar.sh $CHANGE_ID $CHANGE_BRANCH $CHANGE_TARGET $GITHUB_TOKEN"
 
-                        // CHANGE_BRANCH is somestory
-                        echo "----- CHANGE_BRANCH is $CHANGE_BRANCH"
-
-                        // CHANGE_TARGET is main
-                        echo "----- CHANGE_TARGET is $CHANGE_TARGET"
-
-                        // GITHUB_PASSWORD is xxx
-                        echo "----- GITHUB_TOKEN is $GITHUB_TOKEN"
-
-                        //
-                        // v1 works!
-                        //
-                        // copy source into container.
-                        // run via ENTRYPOINT in docker image.
-                        //
-                        // sh "docker run --rm --name sb-someapp-c1 sb-someapp-i1"
-
-                        //
-                        // v2 works!
-                        //
-                        // copy source into container.
-                        // run via --entrypoint on commandline.
-                        //
-                        sh "docker run --rm --entrypoint bash --name sb-someapp-c1 sb-someapp-i1 sonar.sh $CHANGE_ID $CHANGE_BRANCH $CHANGE_TARGET $GITHUB_TOKEN"
-
-                        //
-                        // v3 fails!!!
-                        //
-                        // do not copy source, map drive.
-                        // run via --entrypoint on commandline.
-                        //
-                        // mapped drive overrides source in container.
-                        // therefore node_modules in container not seen.
-                        //
-                        // also sonar-scanner then seems to not use or work with 'host.docker.internal'?
-                        //
-                        // sh "docker run --rm --entrypoint bash --name sb-someapp-c1 --volume '$WORKSPACE':/app sb-someapp-i1 sonar.sh $CHANGE_ID $CHANGE_BRANCH $CHANGE_TARGET $GITHUB_TOKEN"
+                //
+                // v3 fails!!!
+                //
+                // do not copy source, map drive.
+                // run via --entrypoint on commandline.
+                //
+                // mapped drive overrides source in container.
+                // therefore node_modules in container not seen.
+                //
+                // also sonar-scanner then seems to not use or work with 'host.docker.internal'?
+                //
+                // sh "docker run --rm --entrypoint bash --name sb-someapp-c1 --volume '$WORKSPACE':/app sb-someapp-i1 sonar.sh $CHANGE_ID $CHANGE_BRANCH $CHANGE_TARGET $GITHUB_TOKEN"
             }
         }
     }
