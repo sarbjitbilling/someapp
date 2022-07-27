@@ -11,16 +11,16 @@ pipeline {
     stages {
         stage("Setup") {
             steps {
-                echo "----- BUILD_NUMBER is $BUILD_NUMBER"
+                echo "----- BUILD_NUMBER is ${env.BUILD_NUMBER}"
 
                 // CHANGE_ID seems to always be 1
-                //echo "----- CHANGE_ID is $CHANGE_ID"
+                echo "----- CHANGE_ID is ${env.CHANGE_ID}"
 
                 // CHANGE_BRANCH is somestory
-                //echo "----- CHANGE_BRANCH is $CHANGE_BRANCH"
+                echo "----- CHANGE_BRANCH is ${env.CHANGE_BRANCH}"
 
                 // CHANGE_TARGET is main
-                //echo "----- CHANGE_TARGET is $CHANGE_TARGET"
+                echo "----- CHANGE_TARGET is ${env.CHANGE_TARGET}"
             }
         }
 
