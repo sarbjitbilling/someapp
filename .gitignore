@@ -1,0 +1,13 @@
+# macos
+.DS_Store
+
+# intellij
+.idea/
+
+# node
+node_modules/
+
+.scannerwork/
+
+*.txt
+*.vsdx

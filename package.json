@@ -1,0 +1,12 @@
+{
+    "scripts": {
+        "start": "node test.js",
+        "sb-sonar-scanner": "sonar-scanner"
+    },
+    "dependencies": {
+        "colors": "1.4.0"
+    },
+    "devDependencies": {
+        "sonar-scanner": "^3.1.0"
+    }
+}
