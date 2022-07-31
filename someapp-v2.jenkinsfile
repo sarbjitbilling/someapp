@@ -1,0 +1,55 @@
+#!groovy
+
+pipeline {
+    agent any
+
+    environment {
+        BUILD_NUMBER = "${env.BUILD_NUMBER}"
+        NEXUS_REPOSITORY = "sb1w001:6031"
+    }
+
+    stages {
+        stage("Setup") {
+            steps {
+                echo "----- BUILD_NUMBER is $BUILD_NUMBER"
+            }
+        }
+
+        stage("Docker Login") {
+            steps {
+                script {
+                    withCredentials(
+                            [usernamePassword(
+                                    credentialsId: "sb-nexus",
+                                    usernameVariable: "NEXUS_USERNAME",
+                                    passwordVariable: "NEXUS_PASSWORD"
+                            )]
+                    ) {
+                        echo "Logging into docker with $NEXUS_USERNAME/$NEXUS_PASSWORD"
+                        sh "docker login --username $NEXUS_USERNAME --password $NEXUS_PASSWORD $NEXUS_REPOSITORY"
+                    }
+                }
+            }
+        }
+
+        stage("Docker Build Image") {
+            steps {
+                script {
+                    sh "docker build --tag sb-someapp-i2 --file someapp-v2.dockerfile ."
+                }
+            }
+        }
+
+        stage("Docker Run Container") {
+            steps {
+                //
+                // v2 works!
+                //
+                // copy source into container.
+                // run via --entrypoint on commandline.
+                //
+                sh "docker run --rm --entrypoint bash --name sb-someapp-c2 sb-someapp-i2 someapp-entry.sh"
+            }
+        }
+    }
+}
