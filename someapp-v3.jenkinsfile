@@ -42,15 +42,6 @@ pipeline {
 
         stage("Docker Run Container") {
             steps {
-                // CHANGE_ID seems to always be 1
-                echo "----- CHANGE_ID is $CHANGE_ID"
-
-                // CHANGE_BRANCH is somestory
-                echo "----- CHANGE_BRANCH is $CHANGE_BRANCH"
-
-                // CHANGE_TARGET is main
-                echo "----- CHANGE_TARGET is $CHANGE_TARGET"
-
                 //
                 // v3 fails!!!
                 //
