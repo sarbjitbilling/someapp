@@ -43,32 +43,34 @@ pipeline {
         stage("Docker Run Container") {
             steps {
                 //
-                // try catch used so that next step is run even when this step fails.
+                // 'script' 'try' 'catch' used so that next step is run even when this step fails.
                 //
-                try {
-                    sh("""
-                        echo "----- jenkins: env.BUILD_NUMBER is ${env.BUILD_NUMBER}"
-                        echo "----- jenkins: env.USERPROFILE is ${env.USERPROFILE}"
-                        echo "----- jenkins: env" && env | sort
-                        echo "----- jenkins: sleep 10" && sleep 10
-                        echo "----- jenkins: working directory is `pwd`"
-                        echo "----- jenkins: ls" && ls -ltra
-                        echo "----- jenkins: whoami is `whoami`"
-                        echo "----- jenkins: user id is `id -u`"
-                        echo "----- jenkins: group id is `id -g`"
-                        echo "----- jenkins: creating a file" && touch jenkins-file-`date +"%y%m%d_%H%M%S"` && ls -ltra
-                        echo "----- jenkins: creating a directory" && mkdir jenkins-dir-`date +"%y%m%d_%H%M%S"` && ls -ltra
-                        echo "----- jenkins: ipconfig" && ipconfig
-                        echo "----- jenkins: docker info" && docker info
-                        echo "----- jenkins: git: git config" && git config --list --show-origin
-                        echo "----- jenkins: node: node version" && node --version
-                        echo "----- jenkins: node: npm version" && npm -version
-                       #echo "----- jenkins: java: java version" && java --version
-                       #echo "----- jenkins: maven: maven version" && mvn --version
-                """)
-                } catch (error) {
-                    echo "----- error executing something, error is $error"
-                    unstable("error executing something")
+                script {
+                    try {
+                        sh("""
+                            echo "----- jenkins: env.BUILD_NUMBER is ${env.BUILD_NUMBER}"
+                            echo "----- jenkins: env.USERPROFILE is ${env.USERPROFILE}"
+                            echo "----- jenkins: env" && env | sort
+                            echo "----- jenkins: sleep 10" && sleep 10
+                            echo "----- jenkins: working directory is `pwd`"
+                            echo "----- jenkins: ls" && ls -ltra
+                            echo "----- jenkins: whoami is `whoami`"
+                            echo "----- jenkins: user id is `id -u`"
+                            echo "----- jenkins: group id is `id -g`"
+                            echo "----- jenkins: creating a file" && touch jenkins-file-`date +"%y%m%d_%H%M%S"` && ls -ltra
+                            echo "----- jenkins: creating a directory" && mkdir jenkins-dir-`date +"%y%m%d_%H%M%S"` && ls -ltra
+                            echo "----- jenkins: ipconfig" && ipconfig
+                            echo "----- jenkins: docker info" && docker info
+                            echo "----- jenkins: git: git config" && git config --list --show-origin
+                            echo "----- jenkins: node: node version" && node --version
+                            echo "----- jenkins: node: npm version" && npm -version
+                           #echo "----- jenkins: java: java version" && java --version
+                           #echo "----- jenkins: maven: maven version" && mvn --version
+                    """)
+                    } catch (error) {
+                        echo "----- error executing something, error is $error"
+                        unstable("error executing something")
+                    }
                 }
 
                 //
