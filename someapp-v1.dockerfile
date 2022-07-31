@@ -22,32 +22,12 @@ WORKDIR /app
 
 #
 # v1
-#
-#COPY package.json .
-#COPY package-lock.json .
-#COPY *.js .
-#COPY *.properties .
-#RUN npm install
-#ENTRYPOINT ["npm", "run-script", "sb-sonar-scanner"]
-
-#
-# v2
+# copy source into container.
+# run via ENTRYPOINT in docker image.
 #
 COPY package.json .
 COPY package-lock.json .
 COPY *.js .
 COPY *.properties .
-COPY *.sh .
 RUN npm install
-
-#
-# v3
-#
-#COPY package.json .
-#COPY package-lock.json .
-#RUN npm install
-
-RUN echo "----- docker: working directory is `pwd`"
-RUN echo "----- docker: local directory, ls" && ls -ltra
-RUN echo "----- docker: local space, du" && du . -h --max-depth=1
-RUN echo "----- docker: npm: node modules" && npm list --depth=0
+ENTRYPOINT ["npm", "run-script", "sb-sonar-scanner"]

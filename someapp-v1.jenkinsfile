@@ -35,7 +35,7 @@ pipeline {
         stage("Docker Build Image") {
             steps {
                 script {
-                    sh "docker build --tag sb-someapp-i1 --file someapp.dockerfile ."
+                    sh "docker build --tag sb-someapp-i1 --file someapp-v1.dockerfile ."
                 }
             }
         }
@@ -57,28 +57,7 @@ pipeline {
                 // copy source into container.
                 // run via ENTRYPOINT in docker image.
                 //
-                // sh "docker run --rm --name sb-someapp-c1 sb-someapp-i1"
-
-                //
-                // v2 works!
-                //
-                // copy source into container.
-                // run via --entrypoint on commandline.
-                //
-                sh "docker run --rm --entrypoint bash --name sb-someapp-c1 sb-someapp-i1 sonar.sh $CHANGE_ID $CHANGE_BRANCH $CHANGE_TARGET"
-
-                //
-                // v3 fails!!!
-                //
-                // do not copy source, map drive.
-                // run via --entrypoint on commandline.
-                //
-                // mapped drive overrides source in container.
-                // therefore node_modules in container not seen.
-                //
-                // also sonar-scanner then seems to not use or work with 'host.docker.internal'?
-                //
-                // sh "docker run --rm --entrypoint bash --name sb-someapp-c1 --volume '$WORKSPACE':/app sb-someapp-i1 sonar.sh $CHANGE_ID $CHANGE_BRANCH $CHANGE_TARGET $GITHUB_TOKEN"
+                sh "docker run --rm --name sb-someapp-c1 sb-someapp-i1"
             }
         }
     }
