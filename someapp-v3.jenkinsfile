@@ -62,7 +62,7 @@ pipeline {
                 //
                 // also sonar-scanner then seems to not use or work with 'host.docker.internal'?
                 //
-                sh "docker run --rm --entrypoint bash --name sb-someapp-c3 --volume '$WORKSPACE':/app sb-someapp-i3 sonar.sh $CHANGE_ID $CHANGE_BRANCH $CHANGE_TARGET"
+                sh "docker run --rm --entrypoint bash --name sb-someapp-c3 --volume '$WORKSPACE':/app sb-someapp-i3 someapp-entry.sh"
             }
         }
     }
